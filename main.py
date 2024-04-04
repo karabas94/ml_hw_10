@@ -88,30 +88,3 @@ test_loss, test_mean_iou = model.evaluate(X_test, y_test)
 
 print("loss:", test_loss)
 print("mean IoU:", test_mean_iou)
-
-# my_image_path = 'dog.jpg'
-# my_image = cv2.imread(my_image_path)
-# my_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2RGB)
-#
-# # normalization
-# resized_image = cv2.resize(my_image, (128, 128))
-# resized_image = resized_image / 255.0
-#
-# # preprocessing
-# input_image = np.expand_dims(resized_image, axis=0)
-#
-# # predict
-# predicted_mask = model.predict(input_image)
-#
-# # plots
-# plt.figure(figsize=(10, 5))
-#
-# plt.subplot(1, 2, 1)
-# plt.imshow(resized_image)
-# plt.title('image')
-#
-# plt.subplot(1, 2, 2)
-# plt.imshow(predicted_mask[0][:, :, 0], cmap='gray')
-# plt.title('mask')
-#
-# plt.show()
