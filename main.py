@@ -63,6 +63,9 @@ print("y_train:", y_train.shape)
 print("X_test:", X_test.shape)
 print("y_test:", y_test.shape)
 
+# first pixel in first mask(1)
+print('first pixel in first mask', y_train[0][0, 0, 0])
+
 # first five mask from train
 num_masks_to_display = 5
 plt.figure(figsize=(15, 5))
