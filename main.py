@@ -51,6 +51,9 @@ y_train = np.array([item[1] for item in train_data])
 X_test = np.array([item[0] for item in test_data])
 y_test = np.array([item[1] for item in test_data])
 
+y_train[y_train == 2] = 1
+y_test[y_test == 2] = 1
+
 unique_values = np.unique(y_train)
 print("uniq value in mask:", unique_values)
 
@@ -79,7 +82,7 @@ model = custom_unet(
 
 optimizer = keras.optimizers.Adam()
 
-model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=[keras.metrics.IoU(num_classes=3, target_class_ids=[0])])
+model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=[keras.metrics.IoU(num_classes=2, target_class_ids=[0])])
 
 # train model
 history = model.fit(X_train, y_train, epochs=2, validation_split=0.2)
