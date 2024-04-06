@@ -77,7 +77,7 @@ plt.show()
 
 model = custom_unet(
     input_shape=(128, 128, 3),
-    use_batch_norm=False,
+    use_batch_norm=True,
     num_classes=1,
     filters=64,
     dropout=0.2,
@@ -88,9 +88,24 @@ optimizer = keras.optimizers.Adam()
 model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=[keras.metrics.IoU(num_classes=2, target_class_ids=[0])])
 
 # train model
-history = model.fit(X_train, y_train, epochs=2, validation_split=0.2)
+history = model.fit(X_train, y_train, epochs=10, validation_split=0.2)
 
 test_loss, test_mean_iou = model.evaluate(X_test, y_test)
 
 print("loss:", test_loss)
 print("mean IoU:", test_mean_iou)
+
+my_image = cv2.imread("IMG_5177.jpg")
+my_image_rgb = cv2.cvtColor(my_image, cv2.COLOR_BGR2RGB)
+resized_image = cv2.resize(my_image_rgb, (128, 128))
+normalized_image = resized_image.astype(np.float32) / 255.0
+predicted_mask = model.predict(normalized_image.reshape(1, 128, 128, 3))
+
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.imshow(my_image_rgb)
+plt.title('Input Image')
+plt.subplot(1, 2, 2)
+plt.imshow(predicted_mask[0][:, :, 0], cmap='gray')
+plt.title('Predicted Mask')
+plt.show()
